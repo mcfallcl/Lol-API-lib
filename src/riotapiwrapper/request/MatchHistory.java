@@ -10,6 +10,9 @@ import riotapiwrapper.LolAPI;
  * be sent when {@code this.send()} is called. This enables you to have multiple
  * requests be built without sending the calls to the API, letting you throttle
  * the requests or save them for later.
+ * <p>
+ * This library does not currently support requests for a match history with 
+ * specific champions.
  * 
  * @author  Christopher McFall
  * @see     riotapiwrapper.util.RequestArbiter

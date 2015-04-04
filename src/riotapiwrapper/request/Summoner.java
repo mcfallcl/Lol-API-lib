@@ -102,10 +102,5 @@ public class Summoner extends Request {
     private Summoner() {
         rateLimited = true;
     }
-    
-    //testing only
-    public static void main(String[] args) {
-        
-    }
 
 }

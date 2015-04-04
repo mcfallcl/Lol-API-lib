@@ -55,10 +55,5 @@ public class Team extends Request {
     private Team() {
         rateLimited = true;
     }
-    
-    //testing only
-    public static void main(String[] args) {
-        
-    }
 
 }
