@@ -1,0 +1,6 @@
+#API key
+apikey
+
+#IDE files
+.project
+.classpath
