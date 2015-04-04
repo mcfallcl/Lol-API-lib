@@ -108,8 +108,9 @@ public class LolAPI {
     }
     
     /**
+     * Returns the API key currently being used.
      * 
-     * @return
+     * @return  The API key currently being used.
      */
     public static API getApi() {
         return api;

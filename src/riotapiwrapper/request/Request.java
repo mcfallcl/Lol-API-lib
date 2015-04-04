@@ -75,10 +75,13 @@ public abstract class Request {
     }
     
     /**
-     * Sends the request to the API server and returns the response.
+     * Sends the request to the API server and returns the response. Submitting 
+     * a request with this method bypasses your API key's designated 
+     * {@code RequestArbiter} and can risk violating your rate limit.
      * 
      * @return  The {@code Response} from the API server.
      * @see     Response
+     * @see     riotapiwrapper.util.RequestArbiter
      */
     public Response send() {
         return read(toString());
