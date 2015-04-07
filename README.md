@@ -14,7 +14,7 @@ LolAPI.set("your-api-key-here", new ResponseHandler() {
 });
 ```
 
-The above method sets your api key and sets its rate limits to the , creates a DefaultThrottle for your requests to go through, to ensure you do not go over your api key's rate limit.
+The above method sets your api key and sets its rate limits to the default dev rates(10/10sec, 500/10min), creates a DefaultThrottle for your requests to go through, to ensure you do not go over your api key's rate limit.
 
 You can set your api with specific rate limits or your own throttle. The DefaultThrottle uses a simple queue. The RequestArbiter interface is there to create your own throttle if more functionality is required, like a priority queue.
 
