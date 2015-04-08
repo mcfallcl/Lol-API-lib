@@ -168,14 +168,4 @@ public enum Locales {
      */
     zh_TW;
     
-    /**
-     * Takes a String input and returns the associated correct enum.
-     * 
-     * @param locale    String to be translated
-     * @return          The enum associated with the String input.
-     */
-    public static Locales get(String locale) {
-        //not supported yet
-        return null;
-    }
 }

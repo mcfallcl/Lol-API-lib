@@ -24,10 +24,11 @@ public class LolStaticData extends Request {
     private final static String base2 = "/v1.2/";
     
     private static Locales locale;
+    private static String version;
     
     /**
      * Creates an API request for the full list of current champions' data 
-     * based on the current version for the default region. 
+     * based on the currently selected version and the default region. 
      * <p>
      * Additional data beyond the default should be specified in the champData
      * parameter. Having "all" in the champData parameter retrieves all 
@@ -42,38 +43,13 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData champions(boolean byId, String... champData) {
         LolStaticData data = new LolStaticData();
-        data.build("champion", null, byId, champData);
-        return data;
-    }
-    
-    /**
-     * Creates an API request for the full list of current champions' data 
-     * based on the specified version for the default region. If the specified 
-     * version is invalid the API server will respond with a 
-     * {@code HTTPstatus.DATA_NOT_FOUND} error.
-     * Additional data beyond the default should be specified in the champData
-     * parameter. Having "all" in the champData parameter retrieves all 
-     * additional champion data. If no additional data is requested in 
-     * champData, the minimum data will be retrieved from the API server.
-     * 
-     * @param   byId        Flag indicating weather the champions should be 
-     *                      ordered by their championId's.
-     * @param   version     The version for the data requested.
-     * @param   champData   List of additional data to be requested from the 
-     *                      API server.
-     * @return  An API request for all champions' data and in game statistics 
-     *          sorted by their championIds.
-     */
-    public static LolStaticData champions(boolean byId, String version,
-            String... champData) {
-        LolStaticData data = new LolStaticData();
-        data.build("champion", version, byId, champData);
+        data.build("champion", byId, champData);
         return data;
     }
     
     /**
      * Creates an API request for a specific champion's data, requested by the
-     * champion's id based on the current version for the default region. 
+     * champion's id based on the current version and the default region. 
      * Additional data beyond the default should be specified in 
      * the champData parameter. Having "all" in the champData parameter 
      * retrieves all additional champion data. If no additional data is 
@@ -87,31 +63,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData champion(int id, String... champData) {
         LolStaticData data = new LolStaticData();
-        data.build("champion", id, null, champData);
-        return data;
-    }
-    
-    /**
-     * Creates an API request for a specific champion's data, requested by the
-     * champion's id based on the specified version for the default region. If 
-     * the specified version is invalid the API server will respond with a 
-     * {@code HTTPstatus.DATA_NOT_FOUND} error.
-     * Additional data beyond the default should be specified in 
-     * the champData parameter. Having "all" in the champData parameter 
-     * retrieves all additional champion data. If no additional data is 
-     * requested in champData, the minimum data will be retrieved from the API 
-     * server.
-     * 
-     * @param   id          The id of the champion requested.
-     * @param   version     The version for the data requested.
-     * @param   champData   List of additional data to be requested from the 
-     *                      API server.
-     * @return  An API request for all champions' data and in game statistics.
-     */
-    public static LolStaticData champion(String version, int id, 
-            String... champData) {
-        LolStaticData data = new LolStaticData();
-        data.build("champion", id, version, champData);
+        data.build("champion", id, champData);
         return data;
     }
     
@@ -129,7 +81,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData items(String... itemData) {
         LolStaticData data = new LolStaticData();
-        data.build("item", null, false, itemData);
+        data.build("item", false, itemData);
         return data;
     }
     
@@ -149,7 +101,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData item(int id, String... itemData) {
         LolStaticData data = new LolStaticData();
-        data.build("item", id, null, itemData);
+        data.build("item", id, itemData);
         return data;
     }
     
@@ -162,7 +114,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData languageStrings() {
         LolStaticData data = new LolStaticData();
-        data.build("language-strings");
+        data.bareBuild("language-strings");
         return data;
     }
     
@@ -173,7 +125,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData languages() {
         LolStaticData data = new LolStaticData();
-        data.build("languages");
+        data.bareBuild("languages");
         return data;
     }
     
@@ -186,7 +138,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData map() {
         LolStaticData data = new LolStaticData();
-        data.build("map");
+        data.bareBuild("map");
         return data;
     }
     
@@ -196,7 +148,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData masteries() {
         LolStaticData data = new LolStaticData();
-        data.build("mastery", null);
+        data.build("mastery");
         return data;
     }
     
@@ -207,7 +159,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData mastery(int id) {
         LolStaticData data = new LolStaticData();
-        data.build("mastery", null, id);
+        data.build("mastery", id);
         return data;
     }
     
@@ -218,7 +170,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData realm() {
         LolStaticData data = new LolStaticData();
-        data.build("realm");
+        data.bareBuild("realm");
         return data;
     }
     
@@ -228,7 +180,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData runes() {
         LolStaticData data = new LolStaticData();
-        data.build("rune", null);
+        data.build("rune");
         return data;
     }
     
@@ -239,7 +191,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData rune(int id) {
         LolStaticData data = new LolStaticData();
-        data.build("rune", null, id);
+        data.build("rune", id);
         return data;
     }
     
@@ -249,7 +201,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData summonerSpells() {
         LolStaticData data = new LolStaticData();
-        data.build("summoner-spell", null);
+        data.build("summoner-spell");
         return data;
     }
     
@@ -260,7 +212,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData summonerSpell(int id) {
         LolStaticData data = new LolStaticData();
-        data.build("summoner-spell", null, id);
+        data.build("summoner-spell", id);
         return data;
     }
     
@@ -271,7 +223,7 @@ public class LolStaticData extends Request {
      */
     public static LolStaticData versions() {
         LolStaticData data = new LolStaticData();
-        data.build("versions");
+        data.bareBuild("versions");
         return data;
     }
     
@@ -285,17 +237,27 @@ public class LolStaticData extends Request {
     }
     
     /**
-     * Sets the locale for future request to the specified locale.
+     * Sets the locale for future requests to the specified locale.
      * 
-     * @param   locale
+     * @param   locale  Language locale to be used for future requests. If null,
+     *                  future requests will be made with the current region's
+     *                  default locale.
      * @see     Locales
      */
-    public static void setLocale(String locale) {
-        //currently does nothing. will work when Locale.get() is supported.
-        LolStaticData.locale = Locales.get(locale);
+    public static void setLocale(Locales locale) {
+        LolStaticData.locale = locale;
     }
     
-    private void build(String type, int id, String version, String... data) {
+    /**
+     * 
+     * @param version
+     */
+    public static void setVersion(String version) {
+        //verify version is valid here.
+        LolStaticData.version = version;
+    }
+    
+    private void build(String type, int id, String... data) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -310,7 +272,7 @@ public class LolStaticData extends Request {
         end();
     }
     
-    private void build(String type, String version) {
+    private void build(String type) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -322,7 +284,7 @@ public class LolStaticData extends Request {
         end();
     }
     
-    private void build(String type, String version, int id) {
+    private void build(String type, int id) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -336,7 +298,7 @@ public class LolStaticData extends Request {
         end();
     }
     
-    private void build(String type, String version, boolean byId,
+    private void build(String type, boolean byId,
             String... data) {
         begin();
         url.append(base1)
@@ -356,7 +318,7 @@ public class LolStaticData extends Request {
     /*
      * Used for requests that do not base their response on versions or locale.
      */
-    private void build(String type) {
+    private void bareBuild(String type) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)

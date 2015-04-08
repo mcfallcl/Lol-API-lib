@@ -58,6 +58,9 @@ public class LolAPI {
      * Sets the API key using the {@code DefaultThrottle} as the
      * {@code RequestArbiter} with developer rate limits and the designated 
      * {@code ResponseHandler} to handle request received from the API server.
+     * <p>
+     * The default developer rate limits are: 10 requests every 10 seconds, 
+     * 500 requests every 600 seconds.
      * 
      * @param   key         The LoL API key to be used to make requests.
      * @param   handler     The {@code ResponseHandler} used to handle responses
@@ -67,7 +70,7 @@ public class LolAPI {
      * @see     DefaultThrottle
      * @see     ResponseHandler
      */
-    public static void set(String key, ResponseHandler handler) {
+    public static void setDev(String key, ResponseHandler handler) {
         api = new API(key, handler);
     }
     

@@ -4,3 +4,11 @@ apikey
 #IDE files
 .project
 .classpath
+.settings
+
+#under development
+src/riotapiwrapper/responseobjects/
+test/
+
+#other
+bin/
