@@ -1,5 +1,10 @@
 package riotapiwrapper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 import riotapiwrapper.request.Request;
 import riotapiwrapper.util.DefaultThrottle;
 import riotapiwrapper.util.RequestArbiter;
@@ -52,6 +57,23 @@ public class LolAPI {
      */
     public static void set(String key) {
         api = new API(key);
+    }
+    
+    public static void set(String file, ResponseHandler handler) {
+        String filePath = new File("").getAbsolutePath();
+        filePath += "/apikey";
+        Scanner reader;
+        try {
+            reader = new Scanner(new FileReader(filePath));
+            api = new API(reader.next(), handler);
+            int limits = 0;
+            while (reader.hasNextInt() || limits > 1) {
+                api.addLimit(reader.nextInt(), reader.nextInt());
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }    
     }
     
     /**

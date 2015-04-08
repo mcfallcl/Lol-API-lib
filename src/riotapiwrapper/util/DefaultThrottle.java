@@ -32,7 +32,8 @@ public class DefaultThrottle extends RequestArbiter {
      * @throws  NullPointerException if handler is null.
      */
     public DefaultThrottle(ResponseHandler handler) {
-        this(handler, 10, 10, 500, 600);
+        this.handler = handler;
+        requestQueue = new RequestQueue(10000);
     }
     
     /**
