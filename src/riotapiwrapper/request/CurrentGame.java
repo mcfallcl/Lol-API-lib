@@ -32,7 +32,7 @@ public class CurrentGame extends Request {
      *                      including spectator data.
      * @throws  IllegalStateException if an API key has not been set.
      */
-    public static CurrentGame info(int summonerId) {
+    public static CurrentGame get(int summonerId) {
         CurrentGame game = new CurrentGame();
         game.build(summonerId);
         return game;

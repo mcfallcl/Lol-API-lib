@@ -33,7 +33,7 @@ public class League extends Request {
      * @return                              API Request for the requested
      *                                      challenger league.
      */
-    public static League challenger(String queue) {
+    public static League challenger(QueueTypes queue) {
         League league = new League();
         league.buildChallenger(queue);
         return league;
@@ -159,8 +159,8 @@ public class League extends Request {
         end();
     }
     
-    private void buildChallenger(String queue) {
-        if (!QueueTypes.valueOf(queue).hasChallengerTier()) {
+    private void buildChallenger(QueueTypes queue) {
+        if (!queue.hasChallengerTier()) {
             throw new IllegalArgumentException("Invalid queue type");
         }
         begin();
