@@ -213,8 +213,6 @@ public enum QueueTypes {
      */
     public boolean isRanked() {
         if (this == RANKED_SOLO_5x5 ||
-                this == RANKED_PREMADE_3x3 ||
-                this == RANKED_PREMADE_5x5 ||
                 this == RANKED_TEAM_3x3 ||
                 this == RANKED_TEAM_5x5){
             return true;

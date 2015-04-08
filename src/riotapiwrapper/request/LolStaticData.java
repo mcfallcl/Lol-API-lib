@@ -266,8 +266,8 @@ public class LolStaticData extends Request {
                 .append('/')
                 .append(id)
                 .append('?');
-        evaluateLocale(locale);
-        evaluateVersion(version);
+        evaluateLocale();
+        evaluateVersion();
         evaluateData(data);
         end();
     }
@@ -279,8 +279,8 @@ public class LolStaticData extends Request {
                 .append(base2)
                 .append(type)
                 .append('?');
-        evaluateLocale(locale);
-        evaluateVersion(version);
+        evaluateLocale();
+        evaluateVersion();
         end();
     }
     
@@ -293,8 +293,8 @@ public class LolStaticData extends Request {
                 .append('/')
                 .append(id)
                 .append('?');
-        evaluateLocale(locale);
-        evaluateVersion(version);
+        evaluateLocale();
+        evaluateVersion();
         end();
     }
     
@@ -306,8 +306,8 @@ public class LolStaticData extends Request {
                 .append(base2)
                 .append(type)
                 .append('?');
-        evaluateLocale(locale);
-        evaluateVersion(version);
+        evaluateLocale();
+        evaluateVersion();
         if (byId) {
             url.append("dataById=true&");
         }
@@ -328,14 +328,14 @@ public class LolStaticData extends Request {
         end();
     }
     
-    private void evaluateLocale(Locales locale) {
+    private void evaluateLocale() {
         if (locale == null) return;
         url.append("locale=")
                 .append(locale.toString())
                 .append('&');
     }
     
-    private void evaluateVersion(String version) {
+    private void evaluateVersion() {
         if (version == null || version == "") return;
         url.append("version=")
                 .append(version)
