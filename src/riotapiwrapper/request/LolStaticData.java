@@ -102,6 +102,7 @@ public class LolStaticData extends Request {
     public static LolStaticData item(int id, String... itemData) {
         LolStaticData data = new LolStaticData();
         data.build("item", id, itemData);
+        System.out.println(data);
         return data;
     }
     
@@ -143,8 +144,10 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Creates an API request for the current region's and current version's 
+     * masteries.
      * 
-     * @return
+     * @return  A request for the current region's and version's masteries.
      */
     public static LolStaticData masteries() {
         LolStaticData data = new LolStaticData();
@@ -153,9 +156,11 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Creates an API request for a specified matery's data for the current
+     * region and version.
      * 
-     * @param id
-     * @return
+     * @param id    id of the requested mastery.
+     * @return      A request for a specific mastery.
      */
     public static LolStaticData mastery(int id) {
         LolStaticData data = new LolStaticData();
@@ -175,8 +180,10 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Creates an API request for the current region's and current version's 
+     * runes.
      * 
-     * @return
+     * @return  A request for the current region's and version's runes.
      */
     public static LolStaticData runes() {
         LolStaticData data = new LolStaticData();
@@ -185,9 +192,11 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Creates an API request for a specified rune's data for the current
+     * region and version.
      * 
-     * @param id
-     * @return
+     * @param id    id of the requested rune.
+     * @return      A request for a specific rune.
      */
     public static LolStaticData rune(int id) {
         LolStaticData data = new LolStaticData();
@@ -196,8 +205,10 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Creates an API request for the current region's and current version's 
+     * summoner spells.
      * 
-     * @return
+     * @return  A request for the current region's and version's summoner spells.
      */
     public static LolStaticData summonerSpells() {
         LolStaticData data = new LolStaticData();
@@ -206,9 +217,11 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Creates an API request for a specified summoner spell's data for the 
+     * current region and version.
      * 
-     * @param id
-     * @return
+     * @param id    id of the requested summoner spell.
+     * @return      A request for a specific summoner spell.
      */
     public static LolStaticData summonerSpell(int id) {
         LolStaticData data = new LolStaticData();
@@ -228,15 +241,6 @@ public class LolStaticData extends Request {
     }
     
     /**
-     * Sets the locale for future requests to be the current region's default.
-     * 
-     * @see Locales
-     */
-    public static void defaultLocale() {
-        locale = null;
-    }
-    
-    /**
      * Sets the locale for future requests to the specified locale.
      * 
      * @param   locale  Language locale to be used for future requests. If null,
@@ -249,8 +253,11 @@ public class LolStaticData extends Request {
     }
     
     /**
+     * Sets the version for future requests to the specified version.
      * 
-     * @param version
+     * @param version   Version for future requests. If null, future requests
+     *                  will be made with the most recent version for the 
+     *                  current region.
      */
     public static void setVersion(String version) {
         //verify version is valid here.
@@ -268,7 +275,8 @@ public class LolStaticData extends Request {
                 .append('?');
         evaluateLocale();
         evaluateVersion();
-        evaluateData(data);
+        if (type == "item") evaluateItemData(data);
+        if (type == "champion") evaluateChampData(data);
         end();
     }
     
@@ -311,7 +319,8 @@ public class LolStaticData extends Request {
         if (byId) {
             url.append("dataById=true&");
         }
-        evaluateData(data);
+        if (type == "item") evaluateItemData(data);
+        if (type == "champion") evaluateChampData(data);
         end();
     }
     
@@ -342,9 +351,20 @@ public class LolStaticData extends Request {
                 .append('&');
     }
     
-    private void evaluateData(String... data) {
+    private void evaluateChampData(String... data) {
         if (data.length == 0) return;
         url.append("champData=")
+                .append(data[0]);
+        for (int i = 1; i < data.length; i++) {
+            url.append(',')
+                    .append(data[i]);
+        }
+        url.append('&');
+    }
+    
+    private void evaluateItemData(String... data) {
+        if (data.length == 0) return;
+        url.append("itemData=")
                 .append(data[0]);
         for (int i = 1; i < data.length; i++) {
             url.append(',')

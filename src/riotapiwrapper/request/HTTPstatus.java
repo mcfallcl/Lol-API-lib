@@ -31,6 +31,13 @@ public enum HTTPstatus {
             + "supplied was invalid, or the request was for an incorrect "
             + "or unsupported path."),
             
+            
+    /**
+     * This error indicates that the API server will not give you the data
+     * requested.
+     */
+    FORBIDDEN(403, "This request is forbidden"),
+            
     /**
      * This error indicates that the server has not found a match for the API 
      * request being made. No indication is given whether the condition is 
@@ -99,6 +106,9 @@ public enum HTTPstatus {
                 break;
             case 401:
                 status = UNAUTHORIZED;
+                break;
+            case 403:
+                status = FORBIDDEN;
                 break;
             case 404:
                 status = DATA_NOT_FOUND;

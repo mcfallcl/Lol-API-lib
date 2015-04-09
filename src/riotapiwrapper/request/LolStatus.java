@@ -22,25 +22,30 @@ class LolStatus extends Request {
             + "shards";
     
     /**
+     * Creates a request for the server status of all servers.
      * 
-     * @return
+     * @return  A request for the server status of all servers.
      */
     public static LolStatus allServers() {
         return new LolStatus();
     }
     
     /**
+     * Creates a request for the server status of the current region.
      * 
-     * @return
+     * @return  A request for the server status of the current region.
      */
     public static LolStatus currentRegion() {
         return new LolStatus(LolAPI.getCurrentRegion());
     }
     
     /**
+     * Creates a request for the server status of a specified region. Not all
+     * regions can be requested. If the request region cannot be requested, a 
+     * {@code HTTPstatus.UNAUTHORIZED} response will be retrieved.
      * 
-     * @param region
-     * @return
+     * @param region    The specified region's server status to request
+     * @return          A request for the server status of the specified region.
      */
     public static LolStatus Region(Regions region) {
         return new LolStatus(region);
@@ -56,6 +61,10 @@ class LolStatus extends Request {
         url.append(base)
                 .append("/")
                 .append(r.ABREV);
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(Region(Regions.KR).send());
     }
 
 }
