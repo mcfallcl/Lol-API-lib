@@ -47,8 +47,8 @@ public class Team extends Request {
         return team;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.TEAM;
+    public RequestType type() {
+        return RequestType.TEAM;
     }
     
     private void build(String... ids) {

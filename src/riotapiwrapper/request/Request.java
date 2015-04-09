@@ -86,7 +86,7 @@ public abstract class Request {
      * @see     riotapiwrapper.util.RequestArbiter
      */
     public Response send() {
-        return read(toString());
+        return read(toString(), type());
     }
     
     /**
@@ -104,9 +104,9 @@ public abstract class Request {
      * Returns the request's {@code RequestTypes}
      * 
      * @return  The request's {@code RequestTypes}
-     * @see     RequestTypes
+     * @see     RequestType
      */
-    public abstract RequestTypes type();
+    public abstract RequestType type();
     
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -117,16 +117,17 @@ public abstract class Request {
         return sb.toString();
     }
     
-    private static Response read(String url) {
+    private static Response read(String url, RequestType type) {
         try {
             InputStream is = new URL(url).openStream();
             try {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(is,
                         Charset.forName("UTF-8")));
-                return new Response(url, readAll(rd), HTTPstatus.SUCCESSFUL);
+                return new Response(url, readAll(rd), HTTPstatus.SUCCESSFUL, 
+                        type);
             } catch (IOException e) {
                 System.err.println("IOException: " + e.getMessage());
-                return new Response(url, "NO GOOD " + e.getMessage());
+                return new Response(url, "NO GOOD " + e.getMessage(), type);
             } finally {
                 try {
                     is.close();
@@ -135,7 +136,7 @@ public abstract class Request {
                 }
             }
         } catch (IOException e) {
-            return new Response(url, "NO GOOD " + e.getMessage());
+            return new Response(url, "NO GOOD " + e.getMessage(), type);
         }
     }
     

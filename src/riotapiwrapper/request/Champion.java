@@ -58,8 +58,8 @@ public class Champion extends Request {
         return champ;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.CHAMPION;
+    public RequestType type() {
+        return RequestType.CHAMPION;
     }
     
     private Champion() {

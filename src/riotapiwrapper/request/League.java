@@ -115,8 +115,8 @@ public class League extends Request {
         return league;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.LEAGUE;
+    public RequestType type() {
+        return RequestType.LEAGUE;
     }
     
     private League() {

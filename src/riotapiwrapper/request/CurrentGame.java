@@ -38,8 +38,8 @@ public class CurrentGame extends Request {
         return game;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.CURRENT_GAME;
+    public RequestType type() {
+        return RequestType.CURRENT_GAME;
     }
     
     private void build(int summonerId) {

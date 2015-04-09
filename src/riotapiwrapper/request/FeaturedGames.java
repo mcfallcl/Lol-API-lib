@@ -33,8 +33,8 @@ public class FeaturedGames extends Request {
         return games;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.FEATURED_GAMES;
+    public RequestType type() {
+        return RequestType.FEATURED_GAMES;
     }
     
     private void build() {

@@ -16,7 +16,7 @@ import riotapiwrapper.Regions;
  * @see     riotapiwrapper.util.RequestArbiter
  * @see     Request#send()
  */
-class LolStatus extends Request {
+public class LolStatus extends Request {
     
     private static final String base = "http://status.leagueoflegends.com/"
             + "shards";
@@ -51,8 +51,8 @@ class LolStatus extends Request {
         return new LolStatus(region);
     }
     
-    public RequestTypes type() {
-        return RequestTypes.LOL_STATUS;
+    public RequestType type() {
+        return RequestType.LOL_STATUS;
     }
 
     private LolStatus() {
@@ -65,10 +65,6 @@ class LolStatus extends Request {
         url.append(base)
                 .append("/")
                 .append(r.ABREV);
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(Region(Regions.KR).send());
     }
 
 }

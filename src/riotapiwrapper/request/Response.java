@@ -29,18 +29,27 @@ public class Response {
      */
     public final HTTPstatus status;
     
-    Response(String url, String data, HTTPstatus code) {
+    /**
+     * The type of request sent to receive this response.
+     * 
+     * @see RequestType
+     */
+    public final RequestType requestType;
+    
+    Response(String url, String data, HTTPstatus code, RequestType type) {
         this.url = url;
         this.data = data;
         this.status = code;
+        this.requestType = type;
     }
     
     /*
      * Handling the http status code is pretty hacky right now. Current plan
      * is to change the error code in the enum to a string.
      */
-    Response(String url, String data) {
+    Response(String url, String data, RequestType type) {
         this.url = url;
+        this.requestType = type;
         if (!data.substring(0, 7).equals("NO GOOD")) {
             this.data = data;
             this.status = HTTPstatus.SUCCESSFUL;

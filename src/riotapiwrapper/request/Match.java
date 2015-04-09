@@ -33,8 +33,8 @@ public class Match extends Request {
         return match;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.MATCH;
+    public RequestType type() {
+        return RequestType.MATCH;
     }
     
     private void build(int id, boolean includeTimeline) {

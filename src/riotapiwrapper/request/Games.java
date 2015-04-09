@@ -33,8 +33,8 @@ public class Games extends Request {
         return game;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.GAME;
+    public RequestType type() {
+        return RequestType.GAME;
     }
     
     private Games() {

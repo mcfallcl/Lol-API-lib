@@ -78,8 +78,8 @@ public class Summoner extends Request {
         return summoners;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.SUMMONER;
+    public RequestType type() {
+        return RequestType.SUMMONER;
     }
     
     private void build(String spec, int... summonerIds) {

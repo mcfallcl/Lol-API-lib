@@ -97,8 +97,8 @@ public class MatchHistory extends Request {
         rankedQueues = queues;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.MATCHHISTORY;
+    public RequestType type() {
+        return RequestType.MATCHHISTORY;
     }
     
     private void evaluateRankedQueues() {

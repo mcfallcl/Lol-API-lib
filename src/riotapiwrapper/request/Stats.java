@@ -80,8 +80,8 @@ public class Stats extends Request {
         return stats;
     }
     
-    public RequestTypes type() {
-        return RequestTypes.STATS;
+    public RequestType type() {
+        return RequestType.STATS;
     }
     
     private void build(int summonerId, boolean ranked, int season) {
