@@ -33,6 +33,10 @@ public class Match extends Request {
         return match;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.MATCH;
+    }
+    
     private void build(int id, boolean includeTimeline) {
         begin();
         url.append(LolAPI.getCurrentRegion().ABREV)

@@ -33,6 +33,10 @@ public class FeaturedGames extends Request {
         return games;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.FEATURED_GAMES;
+    }
+    
     private void build() {
         url.append("https://")
                 .append(LolAPI.getCurrentRegion().ABREV)

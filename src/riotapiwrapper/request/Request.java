@@ -100,6 +100,14 @@ public abstract class Request {
         return rateLimited;
     }
     
+    /**
+     * Returns the request's {@code RequestTypes}
+     * 
+     * @return  The request's {@code RequestTypes}
+     * @see     RequestTypes
+     */
+    public abstract RequestTypes type();
+    
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int c;

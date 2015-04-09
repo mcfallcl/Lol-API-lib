@@ -58,6 +58,10 @@ public class Champion extends Request {
         return champ;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.CHAMPION;
+    }
+    
     private Champion() {
         rateLimited = true;
     }

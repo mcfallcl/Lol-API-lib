@@ -78,6 +78,10 @@ public class Summoner extends Request {
         return summoners;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.SUMMONER;
+    }
+    
     private void build(String spec, int... summonerIds) {
         if (summonerIds.length > 40) {
             throw new IllegalArgumentException("the max ammount of ids is 40");

@@ -97,6 +97,10 @@ public class MatchHistory extends Request {
         rankedQueues = queues;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.MATCHHISTORY;
+    }
+    
     private void evaluateRankedQueues() {
         if (rankedQueues == null) return;
         url.append("rankedQueues=");

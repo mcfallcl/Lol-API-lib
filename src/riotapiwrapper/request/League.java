@@ -115,6 +115,10 @@ public class League extends Request {
         return league;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.LEAGUE;
+    }
+    
     private League() {
         rateLimited = true;
     }

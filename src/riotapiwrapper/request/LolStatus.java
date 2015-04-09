@@ -50,6 +50,10 @@ class LolStatus extends Request {
     public static LolStatus Region(Regions region) {
         return new LolStatus(region);
     }
+    
+    public RequestTypes type() {
+        return RequestTypes.LOL_STATUS;
+    }
 
     private LolStatus() {
         rateLimited = false;

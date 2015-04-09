@@ -113,7 +113,12 @@ public class DefaultThrottle extends RequestArbiter {
         send(requestQueue.pop());
     }
     
+    /*
+     * Determines if the queue is going to be where further requests will be
+     * sent from.
+     */
     private void workQueue() {
+        //makes sure the queue isn't being worked more than once.
         if (workingQueue == true) return;
         if (requestQueue.isEmpty()) {
             message = "The queue is empty";
@@ -122,6 +127,12 @@ public class DefaultThrottle extends RequestArbiter {
         workingQueue = true;
         message = "Working the queue.";
         Timer timer = new Timer("queue worker thread", true);
+        /*
+         * Sets a timer to check to see if a request can be sent every 200 ms.
+         * 
+         * When the queue is emptied, sets working queue to false until it is
+         * required for to hold requests again.
+         */
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

@@ -33,6 +33,10 @@ public class Games extends Request {
         return game;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.GAME;
+    }
+    
     private Games() {
         rateLimited = true;
     }

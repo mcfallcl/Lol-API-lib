@@ -264,6 +264,10 @@ public class LolStaticData extends Request {
         LolStaticData.version = version;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.LOL_STATIC_DATA;
+    }
+    
     private void build(String type, int id, String... data) {
         begin();
         url.append(base1)

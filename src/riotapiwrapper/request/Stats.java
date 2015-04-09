@@ -80,6 +80,10 @@ public class Stats extends Request {
         return stats;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.STATS;
+    }
+    
     private void build(int summonerId, boolean ranked, int season) {
         begin();
         url.append(LolAPI.getCurrentRegion().ABREV)

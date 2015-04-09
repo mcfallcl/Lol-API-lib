@@ -47,6 +47,10 @@ public class Team extends Request {
         return team;
     }
     
+    public RequestTypes type() {
+        return RequestTypes.TEAM;
+    }
+    
     private void build(String... ids) {
         if (ids.length > 10) throw new IllegalArgumentException("The max "
                 + "length of ids is 10");
