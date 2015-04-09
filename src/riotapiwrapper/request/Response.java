@@ -1,6 +1,5 @@
 package riotapiwrapper.request;
 
-import riotapiwrapper.responseobjects.ResponseObject;
 
 
 /**
@@ -62,10 +61,6 @@ public class Response {
             }
             
         }
-    }
-    
-    public ResponseObject toObject() {
-        return null;
     }
     
     @Override

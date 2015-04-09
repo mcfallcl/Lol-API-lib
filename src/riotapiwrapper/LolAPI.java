@@ -59,9 +59,17 @@ public class LolAPI {
         api = new API(key);
     }
     
+    /**
+     * Sets the API key using a text file and the {@code DefaultThrottle}. 
+     * Currently only meant to be used with unit tests.
+     * 
+     * @param file      Name of the file in the library's home directory.
+     * @param handler   {@code ResponseHandler} to determine what happens to 
+     *                  the responses.
+     */
     public static void set(String file, ResponseHandler handler) {
         String filePath = new File("").getAbsolutePath();
-        filePath += "/apikey";
+        filePath += '/' + file;
         Scanner reader;
         try {
             reader = new Scanner(new FileReader(filePath));

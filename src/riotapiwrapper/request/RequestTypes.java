@@ -2,7 +2,7 @@ package riotapiwrapper.request;
 
 /**
  * 
- * @author takronix
+ * @author Christopher McFall
  *
  */
 public enum RequestTypes {

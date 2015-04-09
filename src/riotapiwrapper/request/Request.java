@@ -75,8 +75,10 @@ public abstract class Request {
     }
     
     /**
-     * Sends the request to the API server and returns the response. Submitting 
-     * a request with this method bypasses your API key's designated 
+     * This method is meant to be used in a {@code RequestArbiter}.
+     * <p>
+     * Sends the request to the API server and returns the response. manually 
+     * submitting a request with this method bypasses your API key's designated 
      * {@code RequestArbiter} and can risk violating your rate limit.
      * 
      * @return  The {@code Response} from the API server.
