@@ -101,6 +101,10 @@ public class MatchHistory extends Request {
         return RequestType.MATCHHISTORY;
     }
     
+    public boolean hasSubtype() {
+        return false;
+    }
+    
     private void evaluateRankedQueues() {
         if (rankedQueues == null) return;
         url.append("rankedQueues=");

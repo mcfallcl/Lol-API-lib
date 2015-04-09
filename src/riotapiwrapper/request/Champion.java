@@ -62,6 +62,10 @@ public class Champion extends Request {
         return RequestType.CHAMPION;
     }
     
+    public boolean hasSubtype() {
+        return false;
+    }
+    
     private Champion() {
         rateLimited = true;
     }

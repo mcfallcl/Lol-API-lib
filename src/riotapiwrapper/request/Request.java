@@ -108,6 +108,13 @@ public abstract class Request {
      */
     public abstract RequestType type();
     
+    /**
+     * Returns a flag indicating if the request has a subtype.
+     * 
+     * @return  A flag indicating if the request has a subtype.
+     */
+    public abstract boolean hasSubtype();
+    
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int c;

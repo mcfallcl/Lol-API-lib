@@ -7,7 +7,7 @@ apikey
 .settings
 
 #under development
-src/riotapiwrapper/responseobjects/
+src/riotapiwrapper/json/
 test/
 
 #other

@@ -42,7 +42,7 @@ public class LolStatus extends Request {
     /**
      * Creates a request for the server status of a specified region. Not all
      * regions can be requested. If the request region cannot be requested, a 
-     * {@code HTTPstatus.UNAUTHORIZED} response will be retrieved.
+     * {@code HTTPstatus.FORBIDDEN} response will be retrieved.
      * 
      * @param region    The specified region's server status to request
      * @return          A request for the server status of the specified region.
@@ -53,6 +53,10 @@ public class LolStatus extends Request {
     
     public RequestType type() {
         return RequestType.LOL_STATUS;
+    }
+    
+    public boolean hasSubtype() {
+        return false;
     }
 
     private LolStatus() {

@@ -37,6 +37,10 @@ public class FeaturedGames extends Request {
         return RequestType.FEATURED_GAMES;
     }
     
+    public boolean hasSubtype() {
+        return false;
+    }
+    
     private void build() {
         url.append("https://")
                 .append(LolAPI.getCurrentRegion().ABREV)

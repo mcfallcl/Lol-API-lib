@@ -37,6 +37,10 @@ public class Games extends Request {
         return RequestType.GAME;
     }
     
+    public boolean hasSubtype() {
+        return false;
+    }
+    
     private Games() {
         rateLimited = true;
     }

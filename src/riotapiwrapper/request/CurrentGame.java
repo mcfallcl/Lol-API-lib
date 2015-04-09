@@ -42,6 +42,10 @@ public class CurrentGame extends Request {
         return RequestType.CURRENT_GAME;
     }
     
+    public boolean hasSubtype() {
+        return false;
+    }
+    
     private void build(int summonerId) {
         url.append("https://")
                 .append(LolAPI.getCurrentRegion().ABREV)

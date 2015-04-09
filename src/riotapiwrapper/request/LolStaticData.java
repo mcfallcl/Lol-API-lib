@@ -26,6 +26,8 @@ public class LolStaticData extends Request {
     private static Locales locale;
     private static String version;
     
+    private Subtype subtype;
+    
     /**
      * Creates an API request for the full list of current champions' data 
      * based on the currently selected version and the default region. 
@@ -42,8 +44,9 @@ public class LolStaticData extends Request {
      * @return  An API request for all champions' data and in game statistics.
      */
     public static LolStaticData champions(boolean byId, String... champData) {
-        LolStaticData data = new LolStaticData();
-        data.build("champion", byId, champData);
+        Subtype type = Subtype.CHAMPION;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, byId, champData);
         return data;
     }
     
@@ -62,8 +65,9 @@ public class LolStaticData extends Request {
      * @return  An API request for all champions' data and in game statistics.
      */
     public static LolStaticData champion(int id, String... champData) {
-        LolStaticData data = new LolStaticData();
-        data.build("champion", id, champData);
+        Subtype type = Subtype.CHAMPION;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, id, champData);
         return data;
     }
     
@@ -80,8 +84,9 @@ public class LolStaticData extends Request {
      * @return  an API request for all items' data and in game statistics.
      */
     public static LolStaticData items(String... itemData) {
-        LolStaticData data = new LolStaticData();
-        data.build("item", false, itemData);
+        Subtype type = Subtype.ITEM;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, false, itemData);
         return data;
     }
     
@@ -100,9 +105,9 @@ public class LolStaticData extends Request {
      *          statistics.
      */
     public static LolStaticData item(int id, String... itemData) {
-        LolStaticData data = new LolStaticData();
-        data.build("item", id, itemData);
-        System.out.println(data);
+        Subtype type = Subtype.ITEM;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, id, itemData);
         return data;
     }
     
@@ -114,8 +119,9 @@ public class LolStaticData extends Request {
      *          default locale.
      */
     public static LolStaticData languageStrings() {
-        LolStaticData data = new LolStaticData();
-        data.bareBuild("language-strings");
+        Subtype type = Subtype.LANGUAGE_STRINGS;
+        LolStaticData data = new LolStaticData(type);
+        data.bareBuild(type);
         return data;
     }
     
@@ -125,8 +131,9 @@ public class LolStaticData extends Request {
      * @return  An API request for all languages the API supports.
      */
     public static LolStaticData languages() {
-        LolStaticData data = new LolStaticData();
-        data.bareBuild("languages");
+        Subtype type = Subtype.LANGUAGES;
+        LolStaticData data = new LolStaticData(type);
+        data.bareBuild(type);
         return data;
     }
     
@@ -138,8 +145,9 @@ public class LolStaticData extends Request {
      *          maps.
      */
     public static LolStaticData map() {
-        LolStaticData data = new LolStaticData();
-        data.bareBuild("map");
+        Subtype type = Subtype.MAP;
+        LolStaticData data = new LolStaticData(type);
+        data.bareBuild(type);
         return data;
     }
     
@@ -150,8 +158,9 @@ public class LolStaticData extends Request {
      * @return  A request for the current region's and version's masteries.
      */
     public static LolStaticData masteries() {
-        LolStaticData data = new LolStaticData();
-        data.build("mastery");
+        Subtype type = Subtype.MASTERY;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type);
         return data;
     }
     
@@ -163,8 +172,9 @@ public class LolStaticData extends Request {
      * @return      A request for a specific mastery.
      */
     public static LolStaticData mastery(int id) {
-        LolStaticData data = new LolStaticData();
-        data.build("mastery", id);
+        Subtype type = Subtype.MASTERY;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, id);
         return data;
     }
     
@@ -174,8 +184,9 @@ public class LolStaticData extends Request {
      * @return  An API request for the current region's realm data.
      */
     public static LolStaticData realm() {
-        LolStaticData data = new LolStaticData();
-        data.bareBuild("realm");
+        Subtype type = Subtype.REALM;
+        LolStaticData data = new LolStaticData(type);
+        data.bareBuild(type);
         return data;
     }
     
@@ -186,8 +197,9 @@ public class LolStaticData extends Request {
      * @return  A request for the current region's and version's runes.
      */
     public static LolStaticData runes() {
-        LolStaticData data = new LolStaticData();
-        data.build("rune");
+        Subtype type = Subtype.RUNE;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type);
         return data;
     }
     
@@ -199,8 +211,9 @@ public class LolStaticData extends Request {
      * @return      A request for a specific rune.
      */
     public static LolStaticData rune(int id) {
-        LolStaticData data = new LolStaticData();
-        data.build("rune", id);
+        Subtype type = Subtype.RUNE;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, id);
         return data;
     }
     
@@ -211,8 +224,9 @@ public class LolStaticData extends Request {
      * @return  A request for the current region's and version's summoner spells.
      */
     public static LolStaticData summonerSpells() {
-        LolStaticData data = new LolStaticData();
-        data.build("summoner-spell");
+        Subtype type = Subtype.SUMMONER_SPELL;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type);
         return data;
     }
     
@@ -224,8 +238,9 @@ public class LolStaticData extends Request {
      * @return      A request for a specific summoner spell.
      */
     public static LolStaticData summonerSpell(int id) {
-        LolStaticData data = new LolStaticData();
-        data.build("summoner-spell", id);
+        Subtype type = Subtype.SUMMONER_SPELL;
+        LolStaticData data = new LolStaticData(type);
+        data.build(type, id);
         return data;
     }
     
@@ -235,8 +250,9 @@ public class LolStaticData extends Request {
      * @return  An API request for all versions for the current region.
      */
     public static LolStaticData versions() {
-        LolStaticData data = new LolStaticData();
-        data.bareBuild("versions");
+        Subtype type = Subtype.VERSIONS;
+        LolStaticData data = new LolStaticData(type);
+        data.bareBuild(type);
         return data;
     }
     
@@ -268,7 +284,20 @@ public class LolStaticData extends Request {
         return RequestType.LOL_STATIC_DATA;
     }
     
-    private void build(String type, int id, String... data) {
+    /**
+     * Returns the subtype of the request.
+     * 
+     * @return  The subtype of the request.
+     */
+    public String subtype() {
+        return subtype.toString();
+    }
+    
+    public boolean hasSubtype() {
+        return true;
+    }
+    
+    private void build(Subtype type, int id, String... data) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -279,12 +308,12 @@ public class LolStaticData extends Request {
                 .append('?');
         evaluateLocale();
         evaluateVersion();
-        if (type == "item") evaluateItemData(data);
-        if (type == "champion") evaluateChampData(data);
+        if (type == Subtype.ITEM) evaluateItemData(data);
+        if (type == Subtype.CHAMPION) evaluateChampData(data);
         end();
     }
     
-    private void build(String type) {
+    private void build(Subtype type) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -296,7 +325,7 @@ public class LolStaticData extends Request {
         end();
     }
     
-    private void build(String type, int id) {
+    private void build(Subtype type, int id) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -310,7 +339,7 @@ public class LolStaticData extends Request {
         end();
     }
     
-    private void build(String type, boolean byId,
+    private void build(Subtype type, boolean byId,
             String... data) {
         begin();
         url.append(base1)
@@ -323,15 +352,15 @@ public class LolStaticData extends Request {
         if (byId) {
             url.append("dataById=true&");
         }
-        if (type == "item") evaluateItemData(data);
-        if (type == "champion") evaluateChampData(data);
+        if (type == Subtype.ITEM) evaluateItemData(data);
+        if (type == Subtype.CHAMPION) evaluateChampData(data);
         end();
     }
     
     /*
      * Used for requests that do not base their response on versions or locale.
      */
-    private void bareBuild(String type) {
+    private void bareBuild(Subtype type) {
         begin();
         url.append(base1)
                 .append(LolAPI.getCurrentRegion().ABREV)
@@ -377,8 +406,36 @@ public class LolStaticData extends Request {
         url.append('&');
     }
     
-    private LolStaticData() {
+    private LolStaticData(Subtype subtype) {
         rateLimited = false;
+        this.subtype = subtype;
+    }
+    
+    private enum Subtype {
+        
+        CHAMPION,
+        ITEM,
+        LANGUAGE_STRINGS,
+        LANGUAGES,
+        MAP,
+        MASTERY,
+        REALM,
+        RUNE,
+        SUMMONER_SPELL,
+        VERSIONS;
+        
+        @Override
+        public String toString() {
+            switch (this) {
+                case LANGUAGE_STRINGS:
+                    return "language-strings";
+                case SUMMONER_SPELL:
+                    return "summoner-spell";
+                default:
+                    return this.name().toLowerCase();
+            }
+        }
+        
     }
 
 }

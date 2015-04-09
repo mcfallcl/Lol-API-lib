@@ -119,6 +119,10 @@ public class League extends Request {
         return RequestType.LEAGUE;
     }
     
+    public boolean hasSubtype() {
+        return false;
+    }
+    
     private League() {
         rateLimited = true;
     }

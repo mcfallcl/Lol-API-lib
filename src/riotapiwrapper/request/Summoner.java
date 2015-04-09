@@ -18,6 +18,8 @@ public class Summoner extends Request {
 
     private static final String base = "/v1.4/summoner/";
     
+    private Subtype subtype;
+    
     /**
      * Creates a request for a list of summoners' ids.
      * 
@@ -25,7 +27,7 @@ public class Summoner extends Request {
      * @return  A request for a list of summoners' ids.
      */
     public static Summoner byName(String... names) {
-        Summoner summoner = new Summoner();
+        Summoner summoner = new Summoner(Subtype.NONE);
         summoner.build(names);
         return summoner;
     }
@@ -37,7 +39,7 @@ public class Summoner extends Request {
      * @return      A request for a list of summoners' basic data.
      */
     public static Summoner byIds(int... ids) {
-        Summoner summoners = new Summoner();
+        Summoner summoners = new Summoner(Subtype.NONE);
         summoners.build(ids);
         return summoners;
     }
@@ -49,8 +51,9 @@ public class Summoner extends Request {
      * @return              A request for a list of summoners' current masteries.
      */
     public static Summoner masteries(int... summonerIds) {
-        Summoner summoners = new Summoner();
-        summoners.build("masteries", summonerIds);
+        Subtype type = Subtype.MASTERIES;
+        Summoner summoners = new Summoner(type);
+        summoners.build(type, summonerIds);
         return summoners;
     }
     
@@ -61,8 +64,9 @@ public class Summoner extends Request {
      * @return              A request for a list of summoners' current runes.
      */
     public static Summoner runes(int... summonerIds) {
-        Summoner summoners = new Summoner();
-        summoners.build("runes", summonerIds);
+        Subtype type = Subtype.RUNES;
+        Summoner summoners = new Summoner(type);
+        summoners.build(type, summonerIds);
         return summoners;
     }
     
@@ -73,16 +77,31 @@ public class Summoner extends Request {
      * @return              A request for a list of summoners' current names.
      */
     public static Summoner name(int... summonerIds) {
-        Summoner summoners = new Summoner();
-        summoners.build("name", summonerIds);
+        Subtype type = Subtype.NAME;
+        Summoner summoners = new Summoner(type);
+        summoners.build(type, summonerIds);
         return summoners;
+    }
+    
+    /**
+     * Returns the subtype of the request.
+     * 
+     * @return  The subtype of the request.
+     */
+    public String subtype() {
+        return subtype.toString();
     }
     
     public RequestType type() {
         return RequestType.SUMMONER;
     }
     
-    private void build(String spec, int... summonerIds) {
+    public boolean hasSubtype() {
+        if (subtype == Subtype.NONE) return false;
+        return true;
+    }
+    
+    private void build(Subtype type, int... summonerIds) {
         if (summonerIds.length > 40) {
             throw new IllegalArgumentException("the max ammount of ids is 40");
         }
@@ -97,7 +116,7 @@ public class Summoner extends Request {
             }
         }
         url.append('/')
-                .append(spec)
+                .append(type)
                 .append('?');
         end();
     }
@@ -140,8 +159,23 @@ public class Summoner extends Request {
         end();
     }
     
-    private Summoner() {
+    private Summoner(Subtype subtype) {
+        this.subtype = subtype;
         rateLimited = true;
+    }
+    
+    private enum Subtype {
+        
+        MASTERIES,
+        RUNES,
+        NAME,
+        NONE;
+        
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
+        
     }
 
 }
