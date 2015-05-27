@@ -1,5 +1,10 @@
 package riotapiwrapper.util;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Queue;
+
 import riotapiwrapper.request.Request;
 
 
@@ -9,7 +14,7 @@ import riotapiwrapper.request.Request;
  * @author Christopher McFall
  * @see Request
  */
-public class RequestQueue {
+public class RequestQueue implements Queue<Request> {
     
     private int size = 0;
     private int maxSize;
@@ -37,30 +42,27 @@ public class RequestQueue {
      * 
      * @param request   {@code Request} to be added.
      */
-    public void add(Request request) {
+    public boolean add(Request request) {
         if (first == null) {
             first = new Node(request);
             last = first;
             ++size;
-            return;
+            return true;
         }
         if (size < maxSize) {
             linkToLast(request);
             ++size;
+            return true;
         } else {
-            //show a message
+            throw new IllegalStateException("The queue's max size has been "
+                    + "reached");
         }
     }
     
-    /**
-     * Removes and returns the {@code Request} that's at the front of the queue.
-     * 
-     * @return  The {@code Request} at the front of the queue.
-     */
-    public Request pop() {
+    @Override
+    public Request remove() {
         if (isEmpty()) {
-            //message goes here for user
-            return null;
+            throw new NoSuchElementException("The queue is empty");
         }
         Request r = first.request;
         shiftFirst();
@@ -131,6 +133,87 @@ public class RequestQueue {
             this.request = r;
         }
         
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterator<Request> iterator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object[] toArray() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Request> c) {
+        try {
+            for (Request r : c) {
+                this.add(r);
+            }
+            return true;
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clear() {
+        while (!isEmpty()) {
+            shiftFirst();
+        }
+    }
+
+    @Override
+    public boolean offer(Request e) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Request poll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Request element() {
+        if (isEmpty()) throw new NoSuchElementException();
+        return first.request;
+    }
+
+    @Override
+    public Request peek() {
+        throw new UnsupportedOperationException();
     }
     
 }

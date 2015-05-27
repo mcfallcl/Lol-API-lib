@@ -110,7 +110,7 @@ public class DefaultThrottle extends RequestArbiter {
         if (requestQueue.isEmpty()) {
             throw new NullPointerException("the queue is empty");
         }
-        send(requestQueue.pop());
+        send(requestQueue.remove());
     }
     
     /*
