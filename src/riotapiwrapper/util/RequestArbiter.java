@@ -13,10 +13,7 @@ import riotapiwrapper.request.Request;
  * @author  Christopher McFall  
  *
  */
-public abstract class RequestArbiter {
-
-    private RateLimit[] limits = new RateLimit[2];
-    private int numLimits;
+public interface RequestArbiter {
     
     
     /**
@@ -24,9 +21,7 @@ public abstract class RequestArbiter {
      * 
      * @return The number of current rate limits for the current arbiter.
      */
-    public int numLimits() {
-        return numLimits;
-    }
+    public int numLimits();
     
     /**
      * Adds a limit to the current arbiter.
@@ -38,16 +33,7 @@ public abstract class RequestArbiter {
      *              place.
      * @throws      IllegalArgumentException if either N or T are below 0.
      */
-    public void addLimit(int N, int T) {
-        if (numLimits >= limits.length) {
-            throw new IllegalStateException("Max number of limits reached");
-        }
-        if (N < 0 || T < 0) {
-            throw new IllegalArgumentException("Neither argument may be"
-                    + " negative.");
-        }
-        limits[numLimits++] = new RateLimit(N, T);
-    }
+    public void addLimit(int N, int T);
     
     /**
      * Abstract method meant to be used to determine what is going to happen
@@ -58,27 +44,11 @@ public abstract class RequestArbiter {
     public abstract void arbitrate(Request request);
     
     /**
-     * Increments the rate limiter letting the arbiter know that a request
-     * was sent to the API.
-     */
-    public void addToLimits() {
-        for (RateLimit limit : limits) {
-            limit.add();
-        }
-    }
-    
-    /**
      * Returns if a request can be sent without violating the rate limit.
      * 
-     * @return  a flag indicating if a request can be sent without violating
-     *          the rate limit.
+     * @return  true if a request can be sent without violating the rate limit.
      */
-    public boolean isOpen() {
-        for (RateLimit limit : limits) {
-            if (limit.isFull()) return false;
-        }
-        return true;
-    };
+    public boolean isOpen();
     
     /**
      * Returns the number of request waiting to be sent.

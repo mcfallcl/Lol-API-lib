@@ -1,5 +1,6 @@
 package riotapiwrapper.util;
 
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,12 +15,13 @@ import riotapiwrapper.request.Request;
  * @author Christopher McFall
  *
  */
-public class DefaultThrottle extends RequestArbiter {
+public class DefaultThrottle implements RequestArbiter {
     
     private RequestQueue requestQueue;
     private String message;
     private ResponseHandler handler;
     private boolean workingQueue = false;
+    private LinkedList<RateLimit> rateLimits = new LinkedList<RateLimit>();
     
     /**
      * Creates a {@code DefaultThrottle} with the LoL API developer rate limits,
@@ -106,6 +108,26 @@ public class DefaultThrottle extends RequestArbiter {
         return requestQueue.size();
     }
     
+    @Override
+    public boolean isOpen() {
+        for (RateLimit limit : rateLimits) {
+            if (limit.isFull()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    @Override
+    public void addLimit(int N, int T) {
+        rateLimits.add(new RateLimit(N, T));
+    }
+    
+    @Override
+    public int numLimits() {
+        return rateLimits.size();
+    }
+    
     private void sendNextInQueue() {
         if (requestQueue.isEmpty()) {
             throw new NullPointerException("the queue is empty");
@@ -159,6 +181,12 @@ public class DefaultThrottle extends RequestArbiter {
     private void send(Request request) {
         handler.operate(request.send());
         addToLimits();
+    }
+    
+    private void addToLimits() {
+        for (RateLimit limit : rateLimits) {
+            limit.add();
+        }
     }
     
     /**
