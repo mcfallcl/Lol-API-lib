@@ -36,12 +36,14 @@ public interface RequestArbiter {
     public void addLimit(int N, int T);
     
     /**
-     * Abstract method meant to be used to determine what is going to happen
-     * with a request, based on the rate limit and type of request.
+     * Determines what is going to happen with a request with a specified 
+     * {@code ResponseHandler}. Used to specify how to handle a response that 
+     * isn't the default for the {@code RequestArbiter}.
      * 
      * @param request   The request to be arbitrated.
+     * @param handler   The handler to be used for this request.
      */
-    public abstract void arbitrate(Request request);
+    public abstract void arbitrate(Request request, ResponseHandler handler);
     
     /**
      * Returns if a request can be sent without violating the rate limit.

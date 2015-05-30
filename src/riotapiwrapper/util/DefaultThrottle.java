@@ -1,5 +1,6 @@
 package riotapiwrapper.util;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,11 +18,10 @@ import riotapiwrapper.request.Request;
  */
 public class DefaultThrottle implements RequestArbiter {
     
-    private RequestQueue requestQueue;
-    private String message;
-    private ResponseHandler handler;
+    private LinkedList<RequestHandlerPair> requestQueue;
+    private Collection<RateLimit> rateLimits;
+    
     private boolean workingQueue = false;
-    private LinkedList<RateLimit> rateLimits = new LinkedList<RateLimit>();
     
     /**
      * Creates a {@code DefaultThrottle} with the LoL API developer rate limits,
@@ -29,46 +29,19 @@ public class DefaultThrottle implements RequestArbiter {
      * All {@code Response}s received from the API server go through the given
      * {@code ResponseHandler}.
      * 
-     * @param handler   The {@code ResponseHandler} used to handle 
-     *                  {@code Response}s received from the API server.
      * @throws  NullPointerException if handler is null.
      */
-    public DefaultThrottle(ResponseHandler handler) {
-        this.handler = handler;
-        requestQueue = new RequestQueue(10000);
+    public DefaultThrottle() {
+        requestQueue = new LinkedList<RequestHandlerPair>();
     }
     
-    /**
-     * Creates a {@code DefaultThrottle} with specified rate limits. All
-     * {@code Response}s received from the API server go through the given
-     * {@code ResponseHandler}. If either N2 or T2 are 0, a second rate limit
-     * will not be used.
-     * 
-     * @param handler   The {@code ResponseHandler} used to handle
-     *                  {@code Response}s received from the API server.
-     * @param N1        Number of requests per time for the first rate limit.
-     * @param T1        Time limit for the first rate limit.
-     * @param N2        Number of request per time for the second rate limit.
-     *                  If 0, a second rate limit will not be used.
-     * @param T2        Time limit for the second rate limit. if 0, a second
-     *                  rate limit will not be used.
-     * @throws  NullPointerException if handler is null.
-     * @throws  IllegalArgumentException if N1, T1, N2 or T2 are < 0.
-     */
-    public DefaultThrottle(ResponseHandler handler, int N1, int T1,
-            int N2, int T2) {
-        this(handler, 100000, N1, T1, N2, T2);
-    }
     
     /**
-     * Creates a {@code DefaultThrottle} with specified rate limits and a max 
-     * size for the {@code RequestQueue}. All {@code Response}s received from 
-     * the API server go through the given {@code ResponseHandler}. If either 
+     * Creates a {@code DefaultThrottle} with specified rate limits. 
+     * All {@code Response}s received from the API server go through the given 
+     * {@code ResponseHandler}. If either 
      * N2 or T2 are 0, a second rate limit will not be used.
      * 
-     * @param handler   The {@code ResponseHandler} used to handle
-     *                  {@code Response}s received from the API server.
-     * @param maxSize   The max size for the {@code RequestQueue}.
      * @param N1        Number of requests per time for the first rate limit.
      * @param T1        Time limit for the first rate limit.
      * @param N2        Number of request per time for the second rate limit.
@@ -78,29 +51,25 @@ public class DefaultThrottle implements RequestArbiter {
      * @throws  NullPointerException if handler is null.
      * @throws  IllegalArgumentException if maxSize, N1, T1, N2 or T2 are < 0.
      */
-    public DefaultThrottle(ResponseHandler handler, int maxSize,
-            int N1, int T1, int N2, int T2) {
-        if (handler == null) {
-            throw new NullPointerException();
-        }
-        this.handler = handler;
-        requestQueue = new RequestQueue(maxSize);
+    public DefaultThrottle(int N1, int T1, int N2, int T2) {
+        requestQueue = new LinkedList<RequestHandlerPair>();
         addLimit(N1, T1);
         if (N2 != 0 || T2 != 0) addLimit(N2, T2);
     }
     
     @Override
-    public void arbitrate(Request request) {
+    public void arbitrate(Request request, ResponseHandler handler) {
         if (!request.isRateLimited()) {
             handler.operate(request.send());
             return;
         }
         if (isAtLimit()) {
-            requestQueue.add(request);
+            requestQueue.add(new RequestHandlerPair(request, handler));
             workQueue();
             return;
         }
-        send(request);
+        handler.operate(request.send());
+        addToLimits();
     }
     
     @Override
@@ -132,7 +101,8 @@ public class DefaultThrottle implements RequestArbiter {
         if (requestQueue.isEmpty()) {
             throw new NullPointerException("the queue is empty");
         }
-        send(requestQueue.remove());
+        RequestHandlerPair pair = requestQueue.remove();
+        send(pair);
     }
     
     /*
@@ -143,11 +113,9 @@ public class DefaultThrottle implements RequestArbiter {
         //makes sure the queue isn't being worked more than once.
         if (workingQueue == true) return;
         if (requestQueue.isEmpty()) {
-            message = "The queue is empty";
             return;
         }
         workingQueue = true;
-        message = "Working the queue.";
         Timer timer = new Timer("queue worker thread", true);
         /*
          * Sets a timer to check to see if a request can be sent every 200 ms.
@@ -178,24 +146,30 @@ public class DefaultThrottle implements RequestArbiter {
         return false;
     }
     
-    private void send(Request request) {
-        handler.operate(request.send());
-        addToLimits();
-    }
-    
     private void addToLimits() {
         for (RateLimit limit : rateLimits) {
             limit.add();
         }
     }
     
-    /**
-     * Returns the current message from the {@code DefaultThrottle}.
-     * 
-     * @return  The current message from the {@code DefaultThrottle}.
+    private void send(RequestHandlerPair pair) {
+        pair.handler.operate(pair.request.send());
+    }
+    
+    /*
+     * Simple class for keeping a request and it's handler paired through the
+     * queue.
      */
-    public String getMessage() {
-        return message;
+    private class RequestHandlerPair {
+        
+        public final Request request;
+        public final ResponseHandler handler;
+        
+        public RequestHandlerPair(Request r, ResponseHandler h) {
+            this.request = r;
+            this.handler = h;
+        }
+        
     }
     
 }
