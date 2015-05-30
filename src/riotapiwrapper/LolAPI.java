@@ -39,9 +39,10 @@ public class LolAPI {
      * {@code ResponseHandler}.
      * 
      * @param request   The {@code Request} to be sent.
+     * @param handler   The handler 
      */
-    public static void makeRequest(Request request) {
-        api.arbitrate(request);
+    public static void makeRequest(Request request, ResponseHandler handler) {
+        api.arbitrate(request, handler);
     }
     
     /**
@@ -111,7 +112,6 @@ public class LolAPI {
      * If either N2 or T2 are 0, a second rate limit will not be used.
      * 
      * @param key       The LoL API key to be used to make requests.
-     * @param handler   The {@code ResponseHandler} used to handle responses.
      * @param N1        Number of requests per time for the first rate limit.
      * @param T1        Time limit for the first rate limit.
      * @param N2        Number of requests per time for the second rate limit.
@@ -122,9 +122,9 @@ public class LolAPI {
      *                  if the key given is not correctly formatted.
      * @see ResponseHandler
      */
-    public static void set(String key, ResponseHandler handler, int N1,
+    public static void set(String key, int N1,
             int T1, int N2, int T2) {
-        api = new API(key, handler, N1, T1, N2, T2);
+        api = new API(key, N1, T1, N2, T2);
     }
     
     /**

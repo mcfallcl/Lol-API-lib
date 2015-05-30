@@ -27,7 +27,7 @@ public class API {
     API(String key, ResponseHandler handler) {
         checkKey(key);
         this.KEY = key;
-        arbiter = new DefaultThrottle(handler);
+        arbiter = new DefaultThrottle();
     }
     
     API(String key, RequestArbiter arbiter) {
@@ -36,14 +36,14 @@ public class API {
         this.arbiter = arbiter;
     }
     
-    API(String key, ResponseHandler handler, int N1, int T1, int N2, int T2) {
+    API(String key, int N1, int T1, int N2, int T2) {
         checkKey(key);
         this.KEY = key;
-        arbiter = new DefaultThrottle(handler, N1, T1, N2, T2);
+        arbiter = new DefaultThrottle(N1, T1, N2, T2);
     }
     
-    void arbitrate(Request request) {
-        arbiter.arbitrate(request);
+    void arbitrate(Request request, ResponseHandler handler) {
+        arbiter.arbitrate(request, handler);
     }
     
     void addLimit(int N, int T) {
