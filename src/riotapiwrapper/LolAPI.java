@@ -65,16 +65,14 @@ public class LolAPI {
      * Currently only meant to be used with unit tests.
      * 
      * @param file      Name of the file in the library's home directory.
-     * @param handler   {@code ResponseHandler} to determine what happens to 
-     *                  the responses.
      */
-    public static void set(String file, ResponseHandler handler) {
+    public static void setWithFile(String file) {
         String filePath = new File("").getAbsolutePath();
         filePath += '/' + file;
         Scanner reader;
         try {
             reader = new Scanner(new FileReader(filePath));
-            api = new API(reader.next(), handler);
+            api = new API(reader.next());
             int limits = 0;
             while (reader.hasNextInt() || limits > 1) {
                 api.addLimit(reader.nextInt(), reader.nextInt());
