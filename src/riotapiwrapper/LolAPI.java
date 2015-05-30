@@ -94,15 +94,13 @@ public class LolAPI {
      * 500 requests every 600 seconds.
      * 
      * @param   key         The LoL API key to be used to make requests.
-     * @param   handler     The {@code ResponseHandler} used to handle responses
-     *                      received from the API server.
      * @throws  IllegalArgumentException if the key given is not correctly
      *                      formatted.
      * @see     DefaultThrottle
      * @see     ResponseHandler
      */
-    public static void setDev(String key, ResponseHandler handler) {
-        api = new API(key, handler);
+    public static void setDev(String key) {
+        api = new API(key);
     }
     
     /**

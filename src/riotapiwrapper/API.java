@@ -22,11 +22,6 @@ public class API {
     API(String key) {
         checkKey(key);
         this.KEY = key;
-    }
-    
-    API(String key, ResponseHandler handler) {
-        checkKey(key);
-        this.KEY = key;
         arbiter = new DefaultThrottle();
     }
     
